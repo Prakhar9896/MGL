@@ -1,0 +1,48 @@
+# ========== Node.js / Express backend ==========
+backend/node_modules/
+backend/.env
+backend/.DS_Store
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# ========== React Native (Expo) frontend ==========
+mglui/node_modules/
+mglui/.expo/
+mglui/.expo-shared/
+mglui/.env
+mglui/dist/
+mglui/web-build/
+mglui/.DS_Store
+mglui/npm-debug.log*
+mglui/yarn-debug.log*
+mglui/yarn-error.log*
+mglui/metro-cache/
+mglui/coverage/
+
+# ========== General ==========
+.env
+*.env
+*.env.*
+*.pem
+*.key
+*.p8
+*.p12
+*.jks
+*.mobileprovision
+*.log
+.DS_Store
+*.tsbuildinfo
+
+# ========== OS and Editor Stuff ==========
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========== Ignore build folders if you have native code ==========
+ios/
+android/
