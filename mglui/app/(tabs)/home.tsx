@@ -19,7 +19,7 @@ const home = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://192.168.1.12:3000/games?limit=${LIMIT}&offset=${page}`);
+      const response = await fetch(`http://192.168.1.6:3000/games?limit=${LIMIT}&offset=${page}`);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       const newGames = data.results || [];
@@ -38,7 +38,7 @@ const home = () => {
   const searchName= async()=>{
     setispressed(true);
     setSearching(true);
-    const response= await fetch(`http://192.168.1.12:3000/games?search=${encodeURIComponent(search)}`);
+    const response= await fetch(`http://192.168.1.6:3000/games?search=${encodeURIComponent(search)}`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data= await response.json();
     const searchGames= await data.results;

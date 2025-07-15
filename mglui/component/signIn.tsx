@@ -9,7 +9,7 @@ const SignIn = () => {
   const [pw, setPw]= useState('');
 
   const handlePress= async ()=>{
-    const response= await fetch("http://192.168.1.12:3000/login",{
+    const response= await fetch("http://192.168.1.6:3000/login",{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'

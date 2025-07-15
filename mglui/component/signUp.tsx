@@ -8,7 +8,7 @@ const SignUp = () => {
     const [done,setDone]=useState(false);
     const OnSubmit=async ()=>{
         try{
-            const response = await fetch("http://192.168.1.12:3000/signup",{
+            const response = await fetch("http://192.168.1.6:3000/signup",{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',

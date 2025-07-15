@@ -11,7 +11,7 @@ const GameInfo = () => {
 
   const fetchGameInfo = async () => {
     try {
-      const response = await fetch(`http://192.168.1.12:3000/game/${guid}`);
+      const response = await fetch(`http://192.168.1.6:3000/game/${guid}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error. status: ${response.status}`);
@@ -38,7 +38,7 @@ const GameInfo = () => {
   const handleOptions= async(option: string)=>{
     try{
       const userID= await secureStore.getItem('userid');
-      const response= await fetch(`http://192.168.1.12:3000/user/${userID}/list`,{
+      const response= await fetch(`http://192.168.1.6:3000/user/${userID}/list`,{
         method: 'PATCH',
         headers: {
           'Content-Type':'application/json'

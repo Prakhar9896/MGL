@@ -4,8 +4,18 @@ import SignIn from '@/component/signIn';
 import SignUp from '@/component/signUp';
 import secureStore from '@/utils/secureStore';
 import { useRouter } from 'expo-router';
+import {jwtDecode} from 'jwt-decode';
 
 const AuthScreen = () => {
+  function isTokenExpired(token) {
+    try {
+      const { exp } = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      return exp < currentTime;
+    } catch {
+      return true;
+    }
+  }
 
   const router= useRouter();
   const [checkingToken, setCheckingToken]= useState(true);
@@ -13,7 +23,11 @@ const AuthScreen = () => {
   useEffect(()=>{
     const checkToken= async () => {
       const token= await secureStore.getItem('token');
-      if(!!token) router.replace('/home');
+      if(!!token && !isTokenExpired(token) ){ 
+        router.replace('/home');
+        secureStore.delToken('token');
+        secureStore.delToken('userid');
+      }
       else {
         await secureStore.delToken('token');
         await secureStore.delToken('user');
