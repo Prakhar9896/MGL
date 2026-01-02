@@ -1,6 +1,7 @@
 import { View, Text, TextInput ,Button} from 'react-native'
 import React, { useState } from 'react'
 
+const IP="10.93.1.235" ;
 const SignUp = () => {
     const [name,setName]=useState('');
     const [email, setEmail]=useState('');
@@ -8,7 +9,7 @@ const SignUp = () => {
     const [done,setDone]=useState(false);
     const OnSubmit=async ()=>{
         try{
-            const response = await fetch("http://192.168.1.6:3000/signup",{
+            const response = await fetch(`http://${IP}:3000/signup`,{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',

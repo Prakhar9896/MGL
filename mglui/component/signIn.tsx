@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import secureStore from "../utils/secureStore"
 import { router } from 'expo-router';
 
+
 const SignIn = () => {
 
   const [email, setEmail]= useState('');
   const [pw, setPw]= useState('');
-
+  const IP="10.93.1.235";
   const handlePress= async ()=>{
-    const response= await fetch("http://192.168.1.6:3000/login",{
+    const response= await fetch(`http://${IP}:3000/login`,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'

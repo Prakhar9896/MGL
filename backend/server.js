@@ -14,7 +14,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-
 app.get('/games', (req, res) => {
   const limit = req.query.limit || 10;
   const offset = req.query.offset || 0;
@@ -112,37 +111,38 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.patch('/user/:userID/list',async (req,res)=>{
-  try{
-    const userID= req.params.userID;
-    const {guid , status}= req.body;
+app.patch('/user/:userID/list', async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const { status, guid, name, image} = req.body;
+
+    console.log(image);
 
     const userlist = await List.findOne({ userId: userID });
-    console.log(userlist);
-    if(!userlist) {
-      console.log("User list not found");
-      res.status(404).json({message: "User Id not present in List collection"});
+    if (!userlist) {
+      return res.status(404).json({ message: "User ID not found in List collection" });
     }
 
-    const list= await userlist.list;
-    if(!list) {
-      console.log("no list present")
-      res.status(404).json({message: "No list present"});
+    if (!userlist.list[status]) {
+      return res.status(400).json({ message: "Invalid status category" });
     }
 
-    if (!userlist.list[status].includes(guid)) {
-      userlist.list[status].push(guid);
-    } else {
+    const alreadyExists = userlist.list[status].some(game => game.guid === guid);
+    if (alreadyExists) {
       return res.status(409).json({ message: "Game already exists in the list" });
     }
 
+    userlist.list[status].push({ guid, name, image });
     await userlist.save();
-    res.status(200).json({message:"Game added successfully"});
-  }
-  catch(err){
-    res.status(500).json({ message: "List not Updated" });
+
+    res.status(200).json({ message: "Game added successfully" });
+
+  } catch (err) {
+    console.error("Error updating list:", err);
+    res.status(500).json({ message: "List not updated" });
   }
 });
+
 
 app.get('/list', async (req, res) => {
   const { userId } = req.query;

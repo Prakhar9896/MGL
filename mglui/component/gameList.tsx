@@ -1,12 +1,33 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import React from 'react'
+import GameCard from './gameCard'
 
-const GameList = ({status, userId}) => {
-    
+interface Game {
+  name: string
+  image: string
+  guid: string
+}
+
+const GameList = ({ games }: { games: Game[] }) => {
+  if (!games || games.length === 0) {
+    return (
+      <View style={{ padding: 10 }}>
+        <Text>No games found for this list.</Text>
+      </View>
+    )
+  }
+
   return (
-    <View>
-      <Text>GameList</Text>
-    </View>
+    <FlatList
+      data={games}
+      keyExtractor={(item) => item.guid}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ padding: 10 }}
+      renderItem={({ item }) => (
+        <GameCard name={item.name} img={item.image} guid={item.guid} />
+      )}
+    />
   )
 }
 
