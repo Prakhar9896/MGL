@@ -25,8 +25,6 @@ const AuthScreen = () => {
       const token= await secureStore.getItem('token');
       if(!!token && !isTokenExpired(token) ){ 
         router.replace('/home');
-        secureStore.delToken('token');
-        secureStore.delToken('userid');
       }
       else {
         await secureStore.delToken('token');

@@ -1,0 +1,263 @@
+{
+  "info": {
+    "name": "Game List API",
+    "description": "Complete API collection for Game List Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "clerkToken",
+      "value": "YOUR_CLERK_TOKEN_HERE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/search?query=john",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "search"],
+              "query": [{"key": "query", "value": "john"}]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/me/profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newusername\",\n  \"bio\": \"Gaming enthusiast!\"\n}"
+            },
+            "url": "{{baseUrl}}/users/me/profile"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "item": [
+        {
+          "name": "Search Games",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/games/search?query=zelda&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["games", "search"],
+              "query": [
+                {"key": "query", "value": "zelda"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trending Games",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/trending"
+          }
+        },
+        {
+          "name": "Get Game by GiantBomb ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/giantbomb/12345"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Game Lists",
+      "item": [
+        {
+          "name": "Get My Game List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gamelists/me/list?status=playing",
+              "host": ["{{baseUrl}}"],
+              "path": ["gamelists", "me", "list"],
+              "query": [{"key": "status", "value": "playing"}]
+            }
+          }
+        },
+        {
+          "name": "Add Game to List",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"giantBombId\": 12345,\n  \"status\": \"playing\",\n  \"rating\": 8,\n  \"review\": \"Great game!\"\n}"
+            },
+            "url": "{{baseUrl}}/gamelists/me/games"
+          }
+        },
+        {
+          "name": "Update Game in List",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"rating\": 9,\n  \"hoursPlayed\": 50\n}"
+            },
+            "url": "{{baseUrl}}/gamelists/me/games/GAME_ID_HERE"
+          }
+        },
+        {
+          "name": "Get Game Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/gamelists/me/stats"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Friendships",
+      "item": [
+        {
+          "name": "Get My Friends",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/friendships/me/friends"
+          }
+        },
+        {
+          "name": "Send Friend Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipientId\": \"USER_ID_HERE\"\n}"
+            },
+            "url": "{{baseUrl}}/friendships/request"
+          }
+        },
+        {
+          "name": "Get Pending Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/friendships/me/requests"
+          }
+        },
+        {
+          "name": "Accept Friend Request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{clerkToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/friendships/accept/FRIENDSHIP_ID_HERE"
+          }
+        }
+      ]
+    }
+  ]
+}
